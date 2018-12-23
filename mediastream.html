@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>iOS Safari MediaStream Bug Example</title>
+    <style>
+      * {
+        font-family: monospace, monaco;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>iOS Safari MediaStream Bug (and fix) Example</h1>
+    <h2>Child Window</h2>
+    <p>
+      This page should echo your microphone input back to you. In order to
+      reproduce the bug, close the window using the "Close Window" button below.
+      Then reopen the child window from the main page, and the microphone will
+      no longer work. Press the "Reload Window then Close (the fix)" button to
+      fix the page.<br />(make sure you accept microphone permissions.)
+    </p>
+    <audio id="local-audio" controls autoplay></audio> <br />
+    <button onclick="window.close()">Close Window</button>
+    <button onclick="window.location.reload()">
+      Reload Window then Close (the fix)
+    </button>
+    <script>
+      // the hack - start
+      if (window.localStorage.getItem("openedOnce")) {
+        window.localStorage.setItem("openedOnce", false);
+        window.close();
+      }
+      window.localStorage.setItem("openedOnce", true);
+      // the hack - end
+
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then(stream => {
+          const localAudioEl = document.querySelector("#local-audio");
+          localAudioEl.srcObject = stream;
+          localAudioEl.play();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    </script>
+  </body>
+</html>

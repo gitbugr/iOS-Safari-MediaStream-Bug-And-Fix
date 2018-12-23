@@ -1,0 +1,8 @@
+{
+  "name": "ios-safari-mediastream-bug-and-fix",
+  "version": "1.0.0",
+  "description": "Minimal demo of a bug with iOS Safari my hacky fix for it",
+  "main": "index.html",
+  "author": "gitbugr",
+  "license": "MIT"
+}
