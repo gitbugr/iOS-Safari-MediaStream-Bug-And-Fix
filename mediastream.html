@@ -11,6 +11,7 @@
       }
     </style>
   </head>
+
   <body>
     <h1>iOS Safari MediaStream Bug (and fix) Example</h1>
     <h2>Child Window</h2>
@@ -29,10 +30,11 @@
     <script>
       // the hack - start
       if (window.localStorage.getItem("openedOnce")) {
-        window.localStorage.setItem("openedOnce", false);
+        window.localStorage.removeItem("openedOnce");
         window.close();
+      } else {
+        window.localStorage.setItem("openedOnce", true);
       }
-      window.localStorage.setItem("openedOnce", true);
       // the hack - end
 
       navigator.mediaDevices
